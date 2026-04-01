@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Source Vida — Strength. Intelligence. Dynamic Living.</title>
+<meta name="description" content="Source Vida creates and distributes premium food and supplements that support strength, intelligence, and dynamic living. Grass-fed, free-range, nutrient-dense.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--green:#1a4a2e;--green-dark:#122f1e;--green-mid:#2d6b47;--gold:#c9a84c;--gold-light:#e8c86a;--cream:#faf8f4;--text:#1c1c1c;--muted:#666}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--text);background:#fff}
+nav{position:fixed;top:0;width:100%;background:rgba(26,74,46,0.97);backdrop-filter:blur(8px);z-index:1000;padding:0 5%}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:70px}
+.logo{font-family:'Playfair Display',serif;font-size:1.5rem;color:#fff;text-decoration:none;letter-spacing:.02em}
+.logo span{color:var(--gold)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:rgba(255,255,255,.85);text-decoration:none;font-size:.9rem;font-weight:500;letter-spacing:.04em;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{background:var(--gold);color:var(--green-dark)!important;padding:.5rem 1.3rem;border-radius:4px;font-weight:600!important}
+.nav-cta:hover{background:var(--gold-light)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hamburger span{width:24px;height:2px;background:#fff;display:block}
+@media(max-width:768px){.nav-links{display:none;position:absolute;top:70px;left:0;right:0;background:var(--green-dark);flex-direction:column;padding:1.5rem 5%;gap:1rem}.nav-links.open{display:flex}.hamburger{display:flex}}
+.hero{min-height:100vh;background:linear-gradient(to right,rgba(18,47,30,.92) 45%,rgba(18,47,30,.6)),url('/images/sourcevida-hero.png') center/cover no-repeat;display:flex;align-items:center;padding:0 5%;padding-top:70px}
+.hero-content{max-width:620px}
+.hero-badge{display:inline-block;border:1px solid var(--gold);color:var(--gold);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;padding:.35rem .9rem;border-radius:2px;margin-bottom:1.5rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,5vw,3.8rem);color:#fff;line-height:1.15;margin-bottom:1.2rem}
+.hero h1 em{color:var(--gold);font-style:normal}
+.hero p{color:rgba(255,255,255,.8);font-size:1.1rem;line-height:1.75;margin-bottom:2rem;max-width:520px}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-gold{background:var(--gold);color:var(--green-dark);padding:.85rem 2rem;border-radius:4px;font-weight:700;text-decoration:none;font-size:.95rem;letter-spacing:.04em;transition:all .2s}
+.btn-gold:hover{background:var(--gold-light);transform:translateY(-1px)}
+.btn-outline{border:2px solid rgba(255,255,255,.6);color:#fff;padding:.85rem 2rem;border-radius:4px;font-weight:600;text-decoration:none;font-size:.95rem;transition:all .2s}
+.btn-outline:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+.hero-stats{display:flex;gap:3rem;margin-top:3.5rem;padding-top:2.5rem;border-top:1px solid rgba(255,255,255,.15)}
+.stat-num{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);display:block}
+.stat-lbl{color:rgba(255,255,255,.6);font-size:.8rem;text-transform:uppercase;letter-spacing:.08em}
+.trust-bar{background:var(--green);padding:1rem 5%;display:flex;justify-content:center;gap:3rem;flex-wrap:wrap}
+.trust-item{color:rgba(255,255,255,.85);font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;gap:.5rem}
+.trust-item::before{content:'✓';color:var(--gold);font-weight:700}
+section{padding:6rem 5%}
+.section-label{display:block;font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:.75rem}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);color:var(--green-dark);line-height:1.25;margin-bottom:1rem}
+.section-sub{color:var(--muted);font-size:1rem;line-height:1.75;max-width:560px}
+.text-center{text-align:center}.text-center .section-sub{margin:0 auto}
+.about{background:var(--cream)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;max-width:1100px;margin:3rem auto 0}
+.about-img{position:relative;border-radius:8px;overflow:hidden;aspect-ratio:4/3}
+.about-img img{width:100%;height:100%;object-fit:cover}
+.about-img-badge{position:absolute;bottom:-1.5rem;right:-1.5rem;background:var(--gold);color:var(--green-dark);padding:1.2rem 1.5rem;border-radius:6px;font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;text-align:center;line-height:1.3;box-shadow:0 4px 20px rgba(0,0,0,.15)}
+.about-pillars{display:flex;flex-direction:column;gap:1.5rem;margin-top:2rem}
+.pillar{display:flex;gap:1rem;align-items:flex-start}
+.pillar-icon{width:44px;height:44px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;margin-top:.1rem}
+.pillar h4{font-weight:600;color:var(--green-dark);margin-bottom:.3rem}
+.pillar p{color:var(--muted);font-size:.92rem;line-height:1.65}
+@media(max-width:768px){.about-grid{grid-template-columns:1fr;gap:2.5rem}}
+.products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;max-width:1100px;margin:3rem auto 0}
+.product-card{border-radius:8px;overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,.07);transition:transform .25s,box-shadow .25s;background:#fff}
+.product-card:hover{transform:translateY(-6px);box-shadow:0 8px 40px rgba(0,0,0,.12)}
+.product-img{height:230px;overflow:hidden}
+.product-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.product-card:hover .product-img img{transform:scale(1.05)}
+.product-body{padding:1.5rem}
+.product-tag{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.product-body h3{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--green-dark);margin:.4rem 0 .6rem}
+.product-body p{color:var(--muted);font-size:.9rem;line-height:1.65}
+@media(max-width:900px){.products-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:580px){.products-grid{grid-template-columns:1fr}}
+.lifestyle{background:var(--green-dark)}
+.lifestyle-inner{display:grid;grid-template-columns:1fr 1fr 1fr;max-width:100%;margin:0 auto}
+.lifestyle-img{position:relative;overflow:hidden;min-height:500px}
+.lifestyle-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.8)}
+.lifestyle-img .overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(18,47,30,.9) 35%,transparent)}
+.lifestyle-img .caption{position:absolute;bottom:2rem;left:2rem;right:2rem;color:#fff}
+.lifestyle-img .caption .name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:600}
+.lifestyle-img .caption .role{color:var(--gold);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase}
+.lifestyle-img .caption .quote{font-size:.88rem;color:rgba(255,255,255,.8);margin-top:.5rem;line-height:1.6;font-style:italic}
+.lifestyle-panel{padding:4rem 3rem;display:flex;flex-direction:column;justify-content:center}
+.lifestyle-panel .section-title{color:#fff}
+.lifestyle-panel .section-sub{color:rgba(255,255,255,.7);max-width:100%}
+.lifestyle-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
+.ls-stat{border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:1.2rem}
+.ls-stat .num{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold);display:block}
+.ls-stat .lbl{color:rgba(255,255,255,.55);font-size:.75rem;text-transform:uppercase;letter-spacing:.07em;margin-top:.2rem;display:block}
+@media(max-width:900px){.lifestyle-inner{grid-template-columns:1fr}.lifestyle-img{min-height:350px}.lifestyle-panel{padding:3rem 2rem}}
+.supps{background:var(--cream)}
+.supps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;max-width:1100px;margin:2.5rem auto 0}
+.supp-card{background:#fff;border-radius:8px;padding:2rem 1.5rem;text-align:center;box-shadow:0 2px 16px rgba(0,0,0,.06);transition:transform .2s}
+.supp-card:hover{transform:translateY(-4px)}
+.supp-icon{font-size:2rem;margin-bottom:1rem;display:block}
+.supp-card h4{font-family:'Playfair Display',serif;color:var(--green-dark);font-size:1.05rem;margin-bottom:.5rem}
+.supp-card p{color:var(--muted);font-size:.85rem;line-height:1.6}
+@media(max-width:900px){.supps-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.supps-grid{grid-template-columns:1fr}}
+.testimonials{background:#fff}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;max-width:1100px;margin:3rem auto 0}
+.testi-card{background:var(--cream);border-radius:8px;padding:2rem;position:relative}
+.testi-card::before{content:'"';font-family:'Playfair Display',serif;font-size:5rem;color:var(--gold);opacity:.25;position:absolute;top:-.5rem;left:1.2rem;line-height:1}
+.testi-text{color:var(--text);font-size:.92rem;line-height:1.75;margin-bottom:1.5rem;position:relative;z-index:1}
+.testi-name{font-weight:700;color:var(--green-dark);font-size:.9rem}
+.testi-role{color:var(--muted);font-size:.78rem}
+.stars{color:var(--gold);font-size:.9rem;margin-bottom:.75rem}
+@media(max-width:900px){.testi-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:580px){.testi-grid{grid-template-columns:1fr}}
+.contact{background:var(--green);padding:6rem 5%}
+.contact-inner{display:grid;grid-template-columns:1fr 1.2fr;gap:5rem;max-width:1100px;margin:0 auto;align-items:start}
+.contact .section-title{color:#fff}
+.contact .section-sub{color:rgba(255,255,255,.7);max-width:100%}
+.contact-details{margin-top:2rem;display:flex;flex-direction:column;gap:1rem}
+.contact-detail{display:flex;align-items:center;gap:.75rem;color:rgba(255,255,255,.8);font-size:.9rem}
+.contact-detail a{color:var(--gold);text-decoration:none}
+.contact-detail a:hover{color:var(--gold-light)}
+form{background:rgba(255,255,255,.07);border-radius:8px;padding:2rem;display:flex;flex-direction:column;gap:1rem}
+form input,form textarea,form select{width:100%;padding:.85rem 1rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;color:#fff;font-family:'Inter',sans-serif;font-size:.9rem;outline:none;transition:border .2s}
+form input::placeholder,form textarea::placeholder{color:rgba(255,255,255,.45)}
+form input:focus,form textarea:focus{border-color:var(--gold)}
+form select{color:rgba(255,255,255,.7)}
+form select option{background:var(--green-dark);color:#fff}
+form textarea{resize:vertical;min-height:130px}
+form button{background:var(--gold);color:var(--green-dark);border:none;padding:1rem;border-radius:4px;font-weight:700;font-size:1rem;cursor:pointer;transition:background .2s;letter-spacing:.04em}
+form button:hover{background:var(--gold-light)}
+@media(max-width:768px){.contact-inner{grid-template-columns:1fr;gap:2.5rem}}
+footer{background:var(--green-dark);padding:3rem 5% 2rem}
+.footer-inner{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:3rem;max-width:1100px;margin:0 auto;padding-bottom:2rem;border-bottom:1px solid rgba(255,255,255,.1)}
+.footer-brand .logo{font-size:1.3rem;display:block;margin-bottom:.75rem}
+.footer-tagline{color:rgba(255,255,255,.45);font-size:.85rem;line-height:1.65}
+.footer-col h5{color:#fff;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.footer-col a{color:rgba(255,255,255,.5);font-size:.85rem;text-decoration:none;transition:color .2s}
+.footer-col a:hover{color:var(--gold)}
+.footer-bottom{max-width:1100px;margin:1.5rem auto 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-bottom p{color:rgba(255,255,255,.3);font-size:.8rem}
+@media(max-width:768px){.footer-inner{grid-template-columns:1fr 1fr}}
+.fade-up{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.fade-up.visible{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="#"><span>Source</span> Vida</a>
+    <div class="hamburger" onclick="this.nextElementSibling.classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#products">Products</a></li>
+      <li><a href="#supplements">Supplements</a></li>
+      <li><a href="#testimonials">Reviews</a></li>
+      <li><a href="#contact" class="nav-cta">Order Now</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content fade-up">
+    <span class="hero-badge">Strength · Intelligence · Dynamic Living</span>
+    <h1>Food &amp; Supplements<br>Built for <em>Peak Humans</em></h1>
+    <p>Source Vida creates and distributes premium food and supplements that support strength, intelligence, and dynamic living — powered by nature, backed by science.</p>
+    <div class="hero-btns">
+      <a href="#products" class="btn-gold">Explore Products</a>
+      <a href="#about" class="btn-outline">Our Mission</a>
+    </div>
+    <div class="hero-stats">
+      <div><span class="stat-num">100%</span><span class="stat-lbl">Grass-Fed &amp; Free-Range</span></div>
+      <div><span class="stat-num">Zero</span><span class="stat-lbl">Fillers or Synthetics</span></div>
+      <div><span class="stat-num">Farm</span><span class="stat-lbl">Direct to Your Door</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="trust-bar">
+  <span class="trust-item">Ethically &amp; Sustainably Sourced</span>
+  <span class="trust-item">No Artificial Additives</span>
+  <span class="trust-item">Cold-Chain Delivery</span>
+  <span class="trust-item">Vet &amp; Nutritionist Approved</span>
+  <span class="trust-item">Senior &amp; Athlete Formulated</span>
+</div>
+
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="about-img fade-up">
+      <img src="/images/sourcevida-hero.png" alt="Grass-fed cattle at Source Vida farms">
+      <div class="about-img-badge">Est. 2021<br>Farm-to-Table</div>
+    </div>
+    <div class="fade-up">
+      <span class="section-label">Our Mission</span>
+      <h2 class="section-title">Nutrition That Fuels<br>the Whole You</h2>
+      <p style="color:var(--muted);line-height:1.75;margin-bottom:1.5rem">Source Vida was founded on a simple belief: the right food and the right supplements change everything — your energy, your clarity, your strength, and your longevity. We source only the finest grass-fed beef, free-range poultry, and bioavailable nutrients because what you put in your body determines what you get out of life.</p>
+      <div class="about-pillars">
+        <div class="pillar">
+          <div class="pillar-icon">🌿</div>
+          <div><h4>Sustainable &amp; Ethical Sourcing</h4><p>Every product traces back to farms we personally vet — regenerative, humane, and free from harmful practices.</p></div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">💪</div>
+          <div><h4>Engineered for Strength</h4><p>From elite athletes to active seniors, our products are formulated to maximise physical strength, endurance, and rapid recovery.</p></div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">🧠</div>
+          <div><h4>Intelligence-First Formulation</h4><p>We don't just feed the body — we fuel the mind. Every product supports mental clarity, focus, and sustained cognitive performance.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="products">
+  <div class="text-center fade-up">
+    <span class="section-label">What We Offer</span>
+    <h2 class="section-title">Premium Foods, Delivered</h2>
+    <p class="section-sub">Every product meets the highest standards for purity, nutritional density, and ethical sourcing. No compromises.</p>
+  </div>
+  <div class="products-grid">
+    <div class="product-card fade-up">
+      <div class="product-img"><img src="/images/sourcevida-beef.png" alt="Premium grass-fed beef cuts"></div>
+      <div class="product-body">
+        <span class="product-tag">Grass-Fed Beef</span>
+        <h3>Pasture-Raised Protein</h3>
+        <p>100% grass-fed, grain-free beef. Rich in omega-3 fatty acids, CLA, and bioavailable iron. Every cut supports lean muscle, metabolic health, and sustained energy.</p>
+      </div>
+    </div>
+    <div class="product-card fade-up">
+      <div class="product-img"><img src="/images/sourcevida-chicken.png" alt="Free-range poultry"></div>
+      <div class="product-body">
+        <span class="product-tag">Free-Range Poultry</span>
+        <h3>Outdoor-Roaming Birds</h3>
+        <p>Humanely raised free-range poultry with no hormones, no antibiotics, no cages. Clean, lean protein your body was designed to thrive on.</p>
+      </div>
+    </div>
+    <div class="product-card fade-up">
+      <div class="product-img"><img src="/images/sourcevida-meals.png" alt="Wholesome carnivore meal spread"></div>
+      <div class="product-body">
+        <span class="product-tag">Wholesome Meal Kits</span>
+        <h3>Carnivore-Approved Meals</h3>
+        <p>Pre-portioned, ready-to-cook meal kits built around whole-animal nutrition. Zero processed ingredients. Maximum convenience, maximum results.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="supps" id="supplements">
+  <div class="text-center fade-up">
+    <span class="section-label">Supplements</span>
+    <h2 class="section-title">Science-Backed. Nature-Derived.</h2>
+    <p class="section-sub">Our supplement line bridges ancestral nutrition and modern performance science — no synthetic shortcuts, only bioavailable compounds your body recognises and uses.</p>
+  </div>
+  <div class="supps-grid">
+    <div class="supp-card fade-up">
+      <span class="supp-icon">🥩</span>
+      <h4>Beef Organ Complex</h4>
+      <p>Liver, heart &amp; kidney — nature's original multivitamin. Dense in B12, CoQ10, retinol, and folate.</p>
+    </div>
+    <div class="supp-card fade-up">
+      <span class="supp-icon">🦴</span>
+      <h4>Collagen &amp; Bone Broth</h4>
+      <p>Hydrolysed collagen from grass-fed bovine. Joint support, gut lining repair, and skin elasticity.</p>
+    </div>
+    <div class="supp-card fade-up">
+      <span class="supp-icon">🧠</span>
+      <h4>Cognitive Stack</h4>
+      <p>Lion's Mane, omega-3 DHA, and phosphatidylserine — for sustained focus, memory, and neuroprotection.</p>
+    </div>
+    <div class="supp-card fade-up">
+      <span class="supp-icon">⚡</span>
+      <h4>Strength &amp; Vitality</h4>
+      <p>Creatine monohydrate, magnesium glycinate, and zinc — the foundational trio for peak performance and recovery.</p>
+    </div>
+  </div>
+</section>
+
+<section style="padding:0;background:var(--green-dark)" id="results">
+  <div class="lifestyle-inner">
+    <div class="lifestyle-img fade-up">
+      <img src="/images/sourcevida-fit-man.png" alt="Athletic man fuelled by Source Vida">
+      <div class="overlay"></div>
+      <div class="caption">
+        <div class="name">Marcus T.</div>
+        <div class="role">Strength Athlete · Age 44</div>
+        <div class="quote">"Source Vida changed how I train and recover. I've never felt stronger or sharper."</div>
+      </div>
+    </div>
+    <div class="lifestyle-panel fade-up">
+      <span class="section-label" style="color:var(--gold)">Real Results</span>
+      <h2 class="section-title" style="color:#fff">Fuel Your<br>Best Self</h2>
+      <p class="section-sub" style="color:rgba(255,255,255,.7);max-width:100%">Our customers — from competitive athletes to health-conscious professionals and active seniors — report measurable improvements in strength, cognitive clarity, energy, and overall vitality within weeks of switching to Source Vida.</p>
+      <div class="lifestyle-stats">
+        <div class="ls-stat"><span class="num">93%</span><span class="lbl">Report increased energy in 30 days</span></div>
+        <div class="ls-stat"><span class="num">87%</span><span class="lbl">Notice improved mental clarity</span></div>
+        <div class="ls-stat"><span class="num">3×</span><span class="lbl">More bioavailable than standard protein</span></div>
+        <div class="ls-stat"><span class="num">100%</span><span class="lbl">Natural, traceable ingredients</span></div>
+      </div>
+    </div>
+    <div class="lifestyle-img fade-up">
+      <img src="/images/sourcevida-fit-woman.png" alt="Athletic woman fuelled by Source Vida">
+      <div class="overlay"></div>
+      <div class="caption">
+        <div class="name">Lena R.</div>
+        <div class="role">Executive &amp; Triathlete · Age 39</div>
+        <div class="quote">"The cognitive stack paired with the beef organs — I can't imagine going back."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials" id="testimonials">
+  <div class="text-center fade-up">
+    <span class="section-label">Customer Stories</span>
+    <h2 class="section-title">What Our Community Says</h2>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card fade-up">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">I've been ordering from Source Vida for months. The grass-fed beef is on another level, and I take their supplements on every business trip. My energy and focus are consistently higher than ever before.</p>
+      <div class="testi-name">Julia Smith</div>
+      <div class="testi-role">Marketing Director</div>
+    </div>
+    <div class="testi-card fade-up">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">Source Vida has transformed how our whole family eats. The variety is incredible, delivery is fast, and knowing the sourcing is ethical makes it even better. My kids actually ask for the meal kits now.</p>
+      <div class="testi-name">Michael Johnson</div>
+      <div class="testi-role">Father of Three &amp; Fitness Enthusiast</div>
+    </div>
+    <div class="testi-card fade-up">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">As a nutritionist I'm very selective. Source Vida is one of the few companies I recommend without reservation — zero fillers, full bioavailability, and ethical sourcing I can stand behind professionally.</p>
+      <div class="testi-name">Sarah Lewis</div>
+      <div class="testi-role">Registered Nutritionist</div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="fade-up">
+      <span class="section-label">Get In Touch</span>
+      <h2 class="section-title">Ready to Start<br>Your Journey?</h2>
+      <p class="section-sub">Whether you're ordering for yourself, your family, or your business — we'll find the right solution for you.</p>
+      <div class="contact-details">
+        <div class="contact-detail">📧 <a href="mailto:info@sourcevida.com">info@sourcevida.com</a></div>
+        <div class="contact-detail">📧 <a href="mailto:mark@sourcevida.com">mark@sourcevida.com</a></div>
+        <div class="contact-detail">📧 <a href="mailto:liz@sourcevida.com">liz@sourcevida.com</a></div>
+        <div class="contact-detail">📧 <a href="mailto:hello@sourcevida.com">hello@sourcevida.com</a></div>
+      </div>
+    </div>
+    <form action="/contact.php" method="POST" class="fade-up">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Email Address" required>
+      <input type="tel" name="phone" placeholder="Phone Number (optional)">
+      <select name="interest">
+        <option value="">I'm interested in...</option>
+        <option value="food">Food Products</option>
+        <option value="supplements">Supplements</option>
+        <option value="wholesale">Wholesale / Distribution</option>
+        <option value="both">Food + Supplements Bundle</option>
+      </select>
+      <textarea name="message" placeholder="Tell us about your goals or questions..."></textarea>
+      <button type="submit">Send Message →</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="logo" href="#"><span>Source</span> Vida</a>
+      <p class="footer-tagline">Strength. Intelligence. Dynamic Living.<br>Premium nutrition, ethically sourced from farms we trust.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#supplements">Supplements</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <ul>
+        <li><a href="mailto:info@sourcevida.com">info@sourcevida.com</a></li>
+        <li><a href="mailto:mark@sourcevida.com">mark@sourcevida.com</a></li>
+        <li><a href="mailto:liz@sourcevida.com">liz@sourcevida.com</a></li>
+        <li><a href="mailto:hello@sourcevida.com">hello@sourcevida.com</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Source Vida. All rights reserved.</p>
+    <p><a href="#" style="color:rgba(255,255,255,.3);text-decoration:none;font-size:.8rem">Privacy Policy</a></p>
+  </div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') });
+},{threshold:0.12});
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+document.querySelector('.hamburger').addEventListener('click', function(){
+  this.nextElementSibling.classList.toggle('open');
+});
+</script>
+</body>
+</html>
