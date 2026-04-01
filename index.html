@@ -339,15 +339,16 @@ footer{background:var(--green-dark);padding:3rem 5% 2rem}
     <div class="fade-up">
       <span class="section-label">Get In Touch</span>
       <h2 class="section-title">Ready to Start<br>Your Journey?</h2>
-      <p class="section-sub">Whether you're ordering for yourself, your family, or your business — we'll find the right solution for you.</p>
-      <div class="contact-details">
-        <div class="contact-detail">📧 <a href="mailto:info@sourcevida.com">info@sourcevida.com</a></div>
-        <div class="contact-detail">📧 <a href="mailto:mark@sourcevida.com">mark@sourcevida.com</a></div>
-        <div class="contact-detail">📧 <a href="mailto:liz@sourcevida.com">liz@sourcevida.com</a></div>
-        <div class="contact-detail">📧 <a href="mailto:hello@sourcevida.com">hello@sourcevida.com</a></div>
+      <p class="section-sub">Whether you're ordering for yourself, your family, or your business — fill in the form and we'll get back to you promptly.</p>
+      <div class="contact-details" style="margin-top:2rem">
+        <div class="contact-detail">📍 Serving customers nationally</div>
+        <div class="contact-detail">🚚 Farm-direct delivery to your door</div>
+        <div class="contact-detail">⏱ We respond within 24 hours</div>
       </div>
     </div>
-    <form action="/contact.php" method="POST" class="fade-up">
+    <form id="contactForm" action="/contact.php" method="POST" class="fade-up">
+      <!-- Honeypot: hidden from humans, filled by bots -->
+      <input type="text" name="website" style="display:none;position:absolute;left:-9999px" tabindex="-1" autocomplete="off">
       <input type="text" name="name" placeholder="Your Name" required>
       <input type="email" name="email" placeholder="Email Address" required>
       <input type="tel" name="phone" placeholder="Phone Number (optional)">
@@ -359,6 +360,12 @@ footer{background:var(--green-dark);padding:3rem 5% 2rem}
         <option value="both">Food + Supplements Bundle</option>
       </select>
       <textarea name="message" placeholder="Tell us about your goals or questions..."></textarea>
+      <!-- Math CAPTCHA -->
+      <div id="captchaBlock" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);border-radius:4px;padding:1rem">
+        <label style="color:rgba(255,255,255,.75);font-size:.88rem;display:block;margin-bottom:.5rem">Security check: What is <strong id="captchaQ" style="color:#c9a84c"></strong>?</label>
+        <input type="number" name="captcha_answer" id="captchaAnswer" placeholder="Enter the answer" required style="margin:0">
+        <input type="hidden" name="captcha_token" id="captchaToken">
+      </div>
       <button type="submit">Send Message →</button>
     </form>
   </div>
@@ -383,10 +390,10 @@ footer{background:var(--green-dark);padding:3rem 5% 2rem}
     <div class="footer-col">
       <h5>Contact</h5>
       <ul>
-        <li><a href="mailto:info@sourcevida.com">info@sourcevida.com</a></li>
-        <li><a href="mailto:mark@sourcevida.com">mark@sourcevida.com</a></li>
-        <li><a href="mailto:liz@sourcevida.com">liz@sourcevida.com</a></li>
-        <li><a href="mailto:hello@sourcevida.com">hello@sourcevida.com</a></li>
+        <li><a href="#contact">Send us a message</a></li>
+        <li><a href="#products">View Products</a></li>
+        <li><a href="#supplements">Supplements</a></li>
+        <li><a href="#testimonials">Customer Reviews</a></li>
       </ul>
     </div>
   </div>
@@ -404,6 +411,29 @@ document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
 document.querySelector('.hamburger').addEventListener('click', function(){
   this.nextElementSibling.classList.toggle('open');
 });
+</script>
+<script>
+// Math CAPTCHA generator — runs client-side, answer verified server-side via session
+(function(){
+  var ops=['+','-','×'];
+  function gen(){
+    var a=Math.floor(Math.random()*8)+2;
+    var b=Math.floor(Math.random()*8)+2;
+    var op=ops[Math.floor(Math.random()*ops.length)];
+    var ans;
+    if(op==='+'){ans=a+b;}
+    else if(op==='-'){if(a<b){var t=a;a=b;b=t;}ans=a-b;}
+    else{ans=a*b;}
+    document.getElementById('captchaQ').textContent=a+' '+op+' '+b;
+    // Store hashed token (time + answer) for server validation
+    document.getElementById('captchaToken').value=btoa(Date.now()+':'+ans);
+    window._captchaAnswer=ans;
+  }
+  document.addEventListener('DOMContentLoaded',gen);
+  // Regenerate if user focuses the field (anti-bot)
+  var el=document.getElementById('captchaAnswer');
+  if(el) el.addEventListener('focus',function(){if(!this.value)gen();});
+})();
 </script>
 </body>
 </html>

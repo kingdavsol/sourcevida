@@ -1,80 +1,107 @@
 <?php
-/**
- * Source Vida — Contact Form Handler
- * Sends form submissions to info@sourcevida.com
- */
+session_start();
 
-// Only handle POST requests
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: /');
-    exit;
+// Generate CAPTCHA question and store answer in session
+function generateCaptcha() {
+    $a = rand(2, 9);
+    $b = rand(2, 9);
+    $ops = ['+', '-', '×'];
+    $op = $ops[array_rand($ops)];
+    switch ($op) {
+        case '+': $answer = $a + $b; break;
+        case '-': $answer = max($a,$b) - min($a,$b); $a = max($a,$b); $b = min($a,$b); break;
+        case '×': $answer = $a * $b; break;
+    }
+    $_SESSION['captcha_answer'] = $answer;
+    $_SESSION['captcha_time']   = time();
+    return "$a $op $b";
 }
 
-// Sanitize inputs
-function sanitize($input) {
-    return htmlspecialchars(strip_tags(trim($input)), ENT_QUOTES, 'UTF-8');
-}
+// Handle form POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-$name    = sanitize($_POST['name']    ?? '');
-$email   = sanitize($_POST['email']   ?? '');
-$phone   = sanitize($_POST['phone']   ?? '');
-$message = sanitize($_POST['message'] ?? '');
+    // Honeypot: bots fill the hidden field, humans leave it blank
+    if (!empty($_POST['website'])) {
+        http_response_code(200); // Silently succeed to fool bots
+        header('Location: /?sent=1#contact');
+        exit;
+    }
 
-// Basic validation
-$errors = [];
+    // Time check: reject if submitted in under 2 seconds (bot speed)
+    $elapsed = time() - (int)($_SESSION['captcha_time'] ?? 0);
+    if ($elapsed < 2) {
+        $error = 'Form submitted too quickly. Please try again.';
+    }
 
-if (empty($name)) {
-    $errors[] = 'Name is required.';
-}
+    // CAPTCHA check
+    $userAnswer = (int)trim($_POST['captcha_answer'] ?? '');
+    $expected   = (int)($_SESSION['captcha_answer'] ?? -999);
+    if ($userAnswer !== $expected) {
+        $error = 'Incorrect answer to the security question. Please try again.';
+    }
 
-if (empty($email) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-    $errors[] = 'A valid email address is required.';
-}
+    if (empty($error)) {
+        $name     = htmlspecialchars(strip_tags(trim($_POST['name']    ?? '')));
+        $email    = filter_var(trim($_POST['email']   ?? ''), FILTER_VALIDATE_EMAIL);
+        $phone    = htmlspecialchars(strip_tags(trim($_POST['phone']   ?? '')));
+        $interest = htmlspecialchars(strip_tags(trim($_POST['interest'] ?? '')));
+        $message  = htmlspecialchars(strip_tags(trim($_POST['message'] ?? '')));
 
-if (empty($message)) {
-    $errors[] = 'Message is required.';
-}
+        if (!$email) {
+            $error = 'Please enter a valid email address.';
+        } elseif (empty($name) || empty($message)) {
+            $error = 'Name and message are required.';
+        } else {
+            $subject = "Source Vida Enquiry from $name" . ($interest ? " — $interest" : '');
+            $body  = "Name:     $name\n";
+            $body .= "Email:    $email\n";
+            $body .= "Phone:    $phone\n";
+            $body .= "Interest: $interest\n\n";
+            $body .= "Message:\n$message\n";
+            $headers  = "From: noreply@sourcevida.com\r\n";
+            $headers .= "Reply-To: $email\r\n";
+            $headers .= "X-Mailer: PHP/" . phpversion();
 
-if (!empty($errors)) {
-    // Redirect back with error (simple approach)
-    header('Location: /?error=' . urlencode(implode(' ', $errors)) . '#contact');
-    exit;
-}
+            mail('info@sourcevida.com', $subject, $body, $headers);
+            mail('mark@sourcevida.com', $subject, $body, $headers);
 
-// Email configuration
-$to      = 'info@sourcevida.com';
-$subject = 'New Enquiry from Source Vida Website - ' . $name;
+            // Clear session captcha to force new one
+            unset($_SESSION['captcha_answer'], $_SESSION['captcha_time']);
+            header('Location: /?sent=1#contact');
+            exit;
+        }
+    }
 
-$body  = "You have received a new message from the Source Vida website contact form.\n\n";
-$body .= "--------------------------------------------\n";
-$body .= "Name:    " . $name . "\n";
-$body .= "Email:   " . $email . "\n";
-$body .= "Phone:   " . (!empty($phone) ? $phone : 'Not provided') . "\n";
-$body .= "--------------------------------------------\n\n";
-$body .= "Message:\n" . $message . "\n\n";
-$body .= "--------------------------------------------\n";
-$body .= "Sent from: https://sourcevida.com\n";
-$body .= "Time: " . date('Y-m-d H:i:s T') . "\n";
+    // Regenerate captcha after failed attempt
+    $captchaQuestion = generateCaptcha();
 
-// Headers
-$headers  = "From: noreply@sourcevida.com\r\n";
-$headers .= "Reply-To: " . $email . "\r\n";
-$headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
-$headers .= "MIME-Version: 1.0\r\n";
-$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-
-// Send email
-$sent = mail($to, $subject, $body, $headers);
-
-// Also send copy to mark@ and hello@
-if ($sent) {
-    mail('mark@sourcevida.com', $subject, $body, $headers);
-}
-
-// Redirect with success/failure flag
-if ($sent) {
-    header('Location: /?sent=1#contact');
 } else {
-    header('Location: /?error=Email+could+not+be+sent.+Please+try+again.#contact');
+    $captchaQuestion = generateCaptcha();
+    $error = '';
 }
-exit;
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Contact — Source Vida</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{font-family:sans-serif;background:#1a4a2e;color:#fff;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:2rem}
+.box{background:rgba(255,255,255,.08);border-radius:8px;padding:2.5rem;max-width:500px;width:100%}
+h2{font-family:Georgia,serif;color:#c9a84c;margin-bottom:1.5rem}
+.err{background:#c0392b;padding:.75rem 1rem;border-radius:4px;margin-bottom:1rem;font-size:.9rem}
+a{color:#c9a84c;font-size:.9rem}
+</style>
+</head>
+<body>
+<div class="box">
+  <h2>⚠️ Form Error</h2>
+  <?php if ($error): ?>
+    <div class="err"><?= htmlspecialchars($error) ?></div>
+  <?php endif; ?>
+  <p style="color:rgba(255,255,255,.7);font-size:.9rem;margin-bottom:1.5rem">Please go back and correct the issue.</p>
+  <a href="/#contact">← Back to contact form</a>
+</div>
+</body>
+</html>
